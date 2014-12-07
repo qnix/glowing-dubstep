@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   def new
     @user = User.new
   end
@@ -16,8 +18,25 @@ class UsersController < ApplicationController
   def show
   end
 
+  def edit
+  end
+
+  def update
+    if @user.save
+      flash[:notice] = "Profile has been updated."
+      redirect_to projects_path
+    else
+      flash[:alert] = "Error encounted - Profile has not been updated."
+      render :update
+    end
+  end
+
 private
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

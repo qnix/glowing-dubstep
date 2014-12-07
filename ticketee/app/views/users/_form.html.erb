@@ -13,10 +13,12 @@
 
   <p>
     <%= f.label :name, "Username" %><br>
-    <%= f.text_field :name %>
+    <%= @user.name %>
+    <%= f.text_field :name, value: @user.name %>
   </p>
   <p>
     <%= f.label :email %><br>
+    <%= @user.email %>
     <%= f.text_field :email %>
   </p>
   <p>
@@ -27,5 +29,9 @@
     <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation %>
   </p>
-  <%= f.submit "Sign up" %>
+  <% if @user.new_record? %>
+    <%= f.submit "Sign up" %>
+  <% else %>
+    <%= f.submit "Update Profile" %>
+  <% end %>
 <% end %>
